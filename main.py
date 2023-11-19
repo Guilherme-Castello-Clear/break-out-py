@@ -1,6 +1,7 @@
 from turtle import Screen
 from paddle import Paddle
 from block import Block
+from ball import Ball
 
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 700
@@ -32,9 +33,15 @@ def render_blocks():
 
 
 screen.listen()
-render_blocks()
+# render_blocks()
+ball = Ball((0, 0))
 
-screen.onkey(paddle.move_left, "Left")
-screen.onkey(paddle.move_right, "Right")
-
-screen.exitonclick()
+while True:
+    screen.onkey(paddle.move_left, "Left")
+    screen.onkey(paddle.move_right, "Right")
+    ball.move()
+    if ball.ycor() > 350:
+        print(ball.ycor())
+        ball.bounce('y')
+    if ball.xcor() > 550 or ball.xcor() < -550:
+        ball.bounce('x')
