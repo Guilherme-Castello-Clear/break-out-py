@@ -33,15 +33,20 @@ def render_blocks():
 
 
 screen.listen()
-# render_blocks()
+render_blocks()
 ball = Ball((0, 0))
 
 while True:
     screen.onkey(paddle.move_left, "Left")
     screen.onkey(paddle.move_right, "Right")
     ball.move()
-    if ball.ycor() > 350:
-        print(ball.ycor())
+    if ball.ycor() > 350 or ball.distance(paddle) < 60:
         ball.bounce('y')
     if ball.xcor() > 550 or ball.xcor() < -550:
         ball.bounce('x')
+    for block in BLOCKS:
+        if ball.distance(block) < 40:
+            ball.bounce('y')
+            ball.bounce('x')
+            block.hideturtle()
+            BLOCKS.remove(block)
