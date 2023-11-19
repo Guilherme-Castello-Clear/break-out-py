@@ -6,7 +6,7 @@ from ball import Ball
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 700
 BLOCKS = []
-
+SCORE = 0
 
 # SCREEN
 screen = Screen()
@@ -23,7 +23,7 @@ def render_blocks():
     block_x = -550
     block_y = 330
 
-    for i in range(4):
+    for i in range(1):
         for j in range(11):
             block = Block((block_x, block_y))
             BLOCKS.append(block)
@@ -36,6 +36,8 @@ screen.listen()
 render_blocks()
 ball = Ball((0, 0))
 
+game_on = True
+
 while True:
     screen.onkey(paddle.move_left, "Left")
     screen.onkey(paddle.move_right, "Right")
@@ -44,9 +46,15 @@ while True:
         ball.bounce('y')
     if ball.xcor() > 550 or ball.xcor() < -550:
         ball.bounce('x')
+    if ball.ycor() < -300:
+        game_on = False
+        print('-= Game Over =-')
+        break
     for block in BLOCKS:
         if ball.distance(block) < 40:
             ball.bounce('y')
             ball.bounce('x')
             block.hideturtle()
             BLOCKS.remove(block)
+            SCORE += 1
+            print(f'Current score: {SCORE}')
