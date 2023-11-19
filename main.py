@@ -50,6 +50,10 @@ while True:
         game_on = False
         print('-= Game Over =-')
         break
+    if BLOCKS == []:
+        game_on = False
+        print(f'You win! | Score: {SCORE}')
+        break
     for block in BLOCKS:
         if ball.distance(block) < 40:
             ball.bounce('y')
